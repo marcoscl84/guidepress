@@ -2,6 +2,9 @@ import bodyParser from "body-parser";
 import express from "express";
 import { connection } from './database/database.js';
 
+import categoriesController from './categories/CategoriesController.js'
+import articlesController from './articles/ArticlesController.js'
+
 const app = express();
 
 // View engine
@@ -20,6 +23,9 @@ connection.authenticate().then(() => {
 }).catch((error) => {
     console.log(error);
 })
+
+app.use("/", categoriesController);
+app.use("/", articlesController);
 
 app.get("/", (req, res) => {
     res.render("index");
