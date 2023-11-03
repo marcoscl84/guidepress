@@ -1,12 +1,8 @@
 import express from "express";
 const router = express.Router();
 
-router.get("/categories", (req, res) => {
-    res.send("rota categ")
-});
-
 router.get("/admin/categories/new", (req, res) => {
-    res.send("Nova")
-})
+    res.render("admin/categories/new");
+});
 
 export default router;
