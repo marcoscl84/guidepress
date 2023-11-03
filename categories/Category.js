@@ -1,15 +1,17 @@
-import { Sequelize } from "sequelize";
-import { connection } from "../database/database";
+import { Sequelize } from 'sequelize';
+import { connection } from '../database/database.js';
 
 const Category = connection.define('categories', {
     title: {
-        title: Sequelize.STRING,
+        type: Sequelize.STRING,
         allowNull: false
     }, 
     slug: {
-        title: Sequelize.STRING,
+        type: Sequelize.STRING,
         allowNull: false
     }
 })
+
+// Category.sync({ force: true });
 
 export default Category;
