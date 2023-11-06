@@ -55,6 +55,25 @@ router.post("/categories/delete", (req, res) => {
     } else {
         res.redirect("/admin/categories");
     }
+});
+
+router.get("/admin/categories/edit/:id", (req, res) => {
+    var id = req.params.id;
+
+    if(isNaN(id)){
+        res.redirect("/admin/categories");
+    }
+
+    Category.findByPk(id).then(category => {
+
+        console.log(id)
+
+        if(category != undefined){
+            res.render("admin/categories/edit", {category: category})
+        } 
+    }).catch(error => {
+        res.redirect("/admin/categories")
+    })
 })
 
 export default router;
