@@ -37,6 +37,7 @@ router.get("/admin/categories", (req, res) => {
     })
 });
 
+// Excluir
 router.post("/categories/delete", (req, res) => {
     var id = req.body.id;
 
