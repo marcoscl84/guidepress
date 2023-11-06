@@ -1,4 +1,6 @@
 import express from "express";
+import Category from "../categories/Category.js"
+
 const router = express.Router();
 
 router.get("/articles", (req, res) => {
@@ -6,7 +8,9 @@ router.get("/articles", (req, res) => {
 });
 
 router.get("/admin/articles/new", (req, res) => {
-    res.render("admin/articles/new")
+    Category.findAll().then(categories => {
+        res.render("admin/articles/new", {categories: categories})
+    })
 })
 
 export default router;
