@@ -6,7 +6,7 @@ router.get("/articles", (req, res) => {
 });
 
 router.get("/admin/articles/new", (req, res) => {
-    res.send("Nova")
+    res.render("admin/articles/new")
 })
 
 export default router;
