@@ -25,14 +25,44 @@ connection.authenticate().then(() => {
     console.log('Conection success!');
 }).catch((error) => {
     console.log(error);
-})
+});
 
 app.use("/", categoriesController);
 app.use("/", articlesController);
 
 app.get("/", (req, res) => {
-    res.render("index");
-})
+    Article.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
+        Category.findAll().then(categories => {
+            res.render("index", {articles: articles, categories: categories});
+        })
+    })
+});
+
+app.get("/:slug",(req, res) => {
+    var val = req.params.slug;
+
+    Article.findOne({
+        where: {
+            slug: val
+        }
+    }).then(article => {
+        if (article != undefined){
+            Category.findAll().then(categories => {
+                res.render("article", {article: article, categories: categories});
+            })            
+        } else {
+            res.redirect("/");
+        }
+    }).catch(error => {
+        res.redirect("/");
+    })
+});
+
+// app.get("/category/:slug")
 
 app.listen(8080, () => {
     console.log("Server is running on port 8080!");
