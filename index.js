@@ -62,7 +62,26 @@ app.get("/:slug",(req, res) => {
     })
 });
 
-// app.get("/category/:slug")
+// Busca categoria por slug
+app.get("/category/:slug", (req, res) => {
+    var val = req.params.slug
+    Category.findOne({
+        where: {
+            slug: val
+        },
+        include: [{model: Article}]
+    }).then(category => {
+        if(category != undefined){
+            Category.findAll().then(categories => {
+                res.render("index", {articles: category.articles, categories: categories})
+            })
+        } else {
+            res.redirect("/");
+        }
+    }).catch(error => {
+        res.redirect("/");
+    })
+})
 
 app.listen(8080, () => {
     console.log("Server is running on port 8080!");
