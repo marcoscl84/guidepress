@@ -55,6 +55,7 @@ router.post("/articles/delete", (req, res) => {
     }
 });
 
+// Acessa artigo pela id
 router.get("/admin/articles/edit/:id", (req, res) => {
     var id = req.params.id;
     
@@ -66,6 +67,23 @@ router.get("/admin/articles/edit/:id", (req, res) => {
         } else {
             res.redirect("/");
         }
+    }).catch(error => {
+        res.redirect("/")
+    })
+});
+
+router.post("/articles/update", (req, res) => {
+    var id = req.body.id;
+    var title = req.body.title;
+    var body = req.body.body;
+    var category = req.body.category;
+
+    Article.update({title:title, body: body, categoryId: category, slug: slugify(title)}, {
+        where: {
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/admin/articles")
     }).catch(error => {
         res.redirect("/")
     })

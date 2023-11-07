@@ -9,7 +9,8 @@
         </div>
         
         <div class="card-body">    
-            <form method="POST" action="#">
+            <form method="POST" action="/articles/update">
+                <input type="hidden" name="id" value="<%= article.id %>">
                 <input class="form-control" type="text" name="title" value="<%= article.title %>">
                 <br>
                 <textarea class="form-control" name="body" placeholder="Escreva seu artigo..." id="article" cols="30" rows="10">
@@ -19,7 +20,14 @@
                 <label for="">Categoria</label>
                 <select name="category" class="form-control" id="">
                     <% categories.forEach((category) => { %>
-                        <option value="<%= category.id %>"><%= category.title %></option>
+
+                        <% if(category.id == article.categoryId){ %>
+                            <option value="<%= category.id %>" selected><%= category.title %></option>
+                        <% } else { %>
+                            <option value="<%= category.id %>" selected><%= category.title %></option>
+                        <% } %>
+
+                        
                     <% }) %>
                 </select>
                 <br>
