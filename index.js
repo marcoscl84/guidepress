@@ -4,9 +4,11 @@ import { connection } from './database/database.js';
 
 import categoriesController from './categories/CategoriesController.js'
 import articlesController from './articles/ArticlesController.js'
+import usersController from './user/UserController.js'
 
 import Article from "./articles/Article.js";
 import Category from "./categories/Category.js";
+import User from "./user/User.js";
 
 const app = express();
 
@@ -29,6 +31,7 @@ connection.authenticate().then(() => {
 
 app.use("/", categoriesController);
 app.use("/", articlesController);
+app.use("/", usersController);
 
 app.get("/", (req, res) => {
     Article.findAll({
