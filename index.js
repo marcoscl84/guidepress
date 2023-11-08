@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import express from "express";
 import { connection } from './database/database.js';
+import session from "express-session";
 
 import categoriesController from './categories/CategoriesController.js'
 import articlesController from './articles/ArticlesController.js'
@@ -14,6 +15,14 @@ const app = express();
 
 // View engine
 app.set('view engine', 'ejs');
+
+// Sessions
+app.use(session({
+    secret: "umsegredoparanaodarruim", 
+    cookie: {
+        maxAge: 3000000
+    }
+}));
 
 // Static archives
 app.use(express.static('public'));
@@ -33,6 +42,7 @@ app.use("/", categoriesController);
 app.use("/", articlesController);
 app.use("/", usersController);
 
+// Listagem de artigos na página principal
 app.get("/", (req, res) => {
     Article.findAll({
         order: [
@@ -46,6 +56,7 @@ app.get("/", (req, res) => {
     })
 });
 
+// Busca artigo por slug
 app.get("/:slug",(req, res) => {
     var val = req.params.slug;
 
